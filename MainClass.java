@@ -5,23 +5,33 @@ import java.util.Arrays;
 public class MainClass {
 
     public static void main(String[] args) {
-        int[] array = { 1, 2, 3, 4, 5 };
+        int[] array = { 3, 4, 5 };
+        System.out.println(Arrays.toString(array));
         System.out.println(Arrays.toString(replaceElementWithProduct(array)));
     }
 
     public static int[] replaceElementWithProduct(int[] array) {
-        int[] newArray = new int[array.length];
+        int n = array.length;
+        int[] result = new int[n];
 
-        for (int i = 0; i < array.length; i++) {
-            int totalProduct = 1;
-            for (int j = 0; j < array.length; j++) {
-                if (i == j) {
-                    continue;
-                }
-                totalProduct *= array[j];
-            }
-            newArray[i] = totalProduct;
+        // left products
+        int[] left = new int[n];
+        left[0] = 1;
+        for (int i = 1; i < n; i++) {
+            System.out.println(Arrays.toString(left));
+            left[i] = left[i - 1] * array[i - 1];
         }
-        return newArray;
+
+        System.out.println(Arrays.toString(left));
+
+        // right products and final result
+        int right = 1;
+        for (int i = n - 1; i >= 0; i--) {
+            result[i] = left[i] * right;
+            right *= array[i];
+        }
+
+        return result;
     }
+
 }
